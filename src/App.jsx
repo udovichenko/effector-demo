@@ -1,28 +1,20 @@
-import { createEvent, createStore } from 'effector'
-import { useUnit } from 'effector-react'
 import './index.css'
+import Counter from './counter/Counter.jsx'
+import { createCounter } from './counter/counter.js'
 
-const plus = createEvent()
-const minus = createEvent()
-const reset = createEvent()
-
-const $count = createStore(0)
-  .on(plus, (x) => x + 1)
-  .on(minus, (x) => x - 1)
-  .reset(reset)
+const counter1 = createCounter(10)
+const counter2 = createCounter(20)
 
 const App = () => {
-  const count = useUnit($count)
-  const handler = useUnit({ plus, minus, reset })
-
   return (
     <main>
-      <div className="display">Count: {count}</div>
-      <div className="buttons">
-        <button onClick={() => handler.minus()}>minus</button>
-        <button onClick={() => handler.reset()}>reset</button>
-        <button onClick={() => handler.plus()}>plus</button>
-      </div>
+      <h1>
+        Counters sending values to a bad and slow
+        server that regularly generates errors when
+        trying to increment value
+      </h1>
+      <Counter model={counter1} />
+      <Counter model={counter2} />
     </main>
   )
 }
