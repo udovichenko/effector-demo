@@ -1,4 +1,5 @@
 import { createEffect, createEvent, createStore, sample } from 'effector'
+import { not } from 'patronum'
 import { sendDecrementToServer, sendIncrementToServer } from './counterApi.js'
 
 export function createCounter(initialCount) {
@@ -13,8 +14,8 @@ export function createCounter(initialCount) {
   const minus = createEvent()
   const reset = createEvent()
 
-  const $plusReady = plusFx.pending.map((x) => !x)
-  const $minusReady = minusFx.pending.map((x) => !x)
+  const $plusReady = not(plusFx.pending)
+  const $minusReady = not(minusFx.pending)
 
   sample({
     clock: [plus, minus],
