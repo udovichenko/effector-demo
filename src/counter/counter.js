@@ -10,15 +10,12 @@ export function createCounter(initialCount) {
   const plusFx = createEffect(sendIncrementToServer)
   const minusFx = createEffect(sendDecrementToServer)
 
-  const plus = createEvent()
-  const minus = createEvent()
-  const reset = createEvent()
-
-  const $plusReady = not(plusFx.pending)
-  const $minusReady = not(minusFx.pending)
+  const plusPushed = createEvent()
+  const minusPushed = createEvent()
+  const resetPushed = createEvent()
 
   sample({
-    clock: [plus, minus],
+    clock: [plusPushed, minusPushed],
     source: $isWaiting,
     fn: () => true,
     target: $isWaiting
@@ -33,8 +30,8 @@ export function createCounter(initialCount) {
 
   // works only when plus side effect is ready
   sample({
-    clock: plus,
-    filter: $plusReady,
+    clock: plusPushed,
+    filter: not(plusFx.pending),
     target: plusFx
   })
 
@@ -54,8 +51,8 @@ export function createCounter(initialCount) {
 
   // works only when minus side effect is ready
   sample({
-    clock: minus,
-    filter: $minusReady,
+    clock: minusPushed,
+    filter: not(minusFx.pending),
     target: minusFx
   })
 
@@ -75,19 +72,19 @@ export function createCounter(initialCount) {
 
   sample({
     source: $errorMsg,
-    clock: reset,
+    clock: resetPushed,
     fn: () => '',
     target: $errorMsg
   })
 
   sample({
     source: $count,
-    clock: reset,
+    clock: resetPushed,
     fn: () => 0,
     target: $count
   })
 
-  return { plus, minus, reset, $count, $errorMsg, $isWaiting }
+  return { plusPushed, minusPushed, resetPushed, $count, $errorMsg, $isWaiting }
 }
 
 

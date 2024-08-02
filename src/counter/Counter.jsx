@@ -1,14 +1,15 @@
 import { useUnit } from 'effector-react'
 import '../index.css'
+import ThemeSwitcher from '../themeSwitcher/ThemeSwitcher.jsx'
 
 const Counter = ({ model }) => {
   const [count, errorMsg, isWaiting, plus, minus, reset] = useUnit([
     model.$count,
     model.$errorMsg,
     model.$isWaiting,
-    model.plus,
-    model.minus,
-    model.reset
+    model.plusPushed,
+    model.minusPushed,
+    model.resetPushed
   ])
 
   return (
@@ -23,6 +24,7 @@ const Counter = ({ model }) => {
         <button onClick={reset}>reset</button>
         <button onClick={plus}>plus</button>
       </div>
+      <ThemeSwitcher />
     </div>
   )
 }
