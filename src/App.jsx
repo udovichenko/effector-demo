@@ -9,7 +9,7 @@ const counter1 = createCounter(10)
 const counter2 = createCounter(20)
 
 const App = () => {
-  const [theme] = useUnit([$theme])
+  const theme = useUnit($theme)
 
   return (
     <main style={{ backgroundColor: theme === 'light' ? '#fff' : '#333', color: theme === 'light' ? '#333' : '#fff' }}>

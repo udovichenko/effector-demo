@@ -1,10 +1,10 @@
 import { useUnit } from 'effector-react'
-import { toggleTheme } from './themeSwitcher.js'
+import { toggledTheme } from './themeSwitcher.js'
 
 const ThemeSwitcher = () => {
-  const [handleToggleTheme] = useUnit([toggleTheme])
+  const handleToggleTheme = useUnit(toggledTheme)
   return (
-    <div>
+    <div style={{ margin: '15px' }}>
       <button onClick={() => handleToggleTheme()}>Switch Theme</button>
     </div>
   )

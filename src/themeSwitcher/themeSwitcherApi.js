@@ -5,3 +5,16 @@ export function detectPreferredTheme() {
     return 'light'
   }
 }
+
+export function saveThemeToLocalStorage(theme) {
+  localStorage.setItem('theme', theme)
+}
+
+export function getThemeFromLocalStorage() {
+  const storedTheme = localStorage.getItem('theme')
+  if (storedTheme) {
+    return storedTheme
+  } else {
+    return detectPreferredTheme()
+  }
+}
